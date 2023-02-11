@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IUser } from '../models/IUser';
 import { UsersService } from '../Services/UserService';
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import Box from '@mui/material/Box';
 
@@ -20,10 +20,14 @@ const SecondPage: React.FC = () => {
     errorMsg:"",
 })
   const navigate = useNavigate();
+
+ 
   useEffect(() => {
+     //To check the user data in locastorage if data is not present it will redirect to first page 
     if (!localStorage.getItem("user")) {
       return navigate("/");
     }
+    //To retrieve the json through getallusers through usersservice classs
     UsersService.getAllUsers()
     .then((res)=>setState({
         ...state,loading:false,users:res.data
@@ -34,6 +38,7 @@ const SecondPage: React.FC = () => {
  
   }, []);
 
+  //For clearing localstorage and redirecting to the firstpage
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
@@ -42,6 +47,7 @@ const SecondPage: React.FC = () => {
 
   console.log("Users data",users);
   const map2 = users?.map(x => ({ id:x.id,col1: x.name, col2: x.username, col3: x.email }));
+  //Data Grid Coloumn defination
      const columns: GridColDef[] = [
          
          { field: "col1", headerName: "Name", width: 300, headerClassName: 'super-app-theme--header',
@@ -55,6 +61,7 @@ const SecondPage: React.FC = () => {
 
   return (
     <div>
+      {/* Displaying data from localStorage */}
       <h1>Welcome to Second Page</h1>
       <h4>Name: {user.name}</h4>
       <h4>Email: {user.email}</h4>

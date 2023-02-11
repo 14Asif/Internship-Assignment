@@ -62,7 +62,7 @@ let FirstPage: React.FC = () => {
   // form handling
   const handleSubmit = (): void => {
     const { name, email, phoneNumber } = user;
-
+//Validation of input field 
     if (!name || !email || !phoneNumber) {
       alert("Please fill the details");
       return;
@@ -121,7 +121,6 @@ return
                 error={error.phoneNumber}
                 helperText={error.phoneNumber ? "Please enter a valid phoneNumber" : ""}
                 value={user.phoneNumber}
-                type="number"
                 onChange={handleChange}
                 autoComplete="nphone-number"
               />
