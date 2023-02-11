@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -14,7 +14,7 @@ type Nullable<T> = T | null;
 interface Istate {
   name: string;
   email: string;
-  phoneNumber: Nullable<number>;
+  phoneNumber: Nullable<string>;
 }
 
 interface IErrorState {
@@ -33,6 +33,7 @@ let Copyright = (props: any) => {
 };
 
 let FirstPage: React.FC = () => {
+
   const navigate = useNavigate();
 
   const [user, setUser] = useState<Istate>({
@@ -61,9 +62,19 @@ let FirstPage: React.FC = () => {
   // form handling
   const handleSubmit = (): void => {
     const { name, email, phoneNumber } = user;
+
     if (!name || !email || !phoneNumber) {
       alert("Please fill the details");
       return;
+    }
+    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+alert("Enter valid email address");
+return
+    }
+    else if(!/^\d{10}$/.test(phoneNumber)){
+      alert("Enter 10 digit number");
+      return
+
     }
     localStorage.clear();
     localStorage.setItem("user", JSON.stringify(user));
